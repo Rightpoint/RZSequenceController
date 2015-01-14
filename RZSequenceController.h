@@ -64,6 +64,9 @@ typedef NS_ENUM(NSUInteger, RZSequenceDirection){
  *
  *  @param sequenceController The sequence controller requesting the view controller.
  *  @param index              The index in the sequence that needs to be reloaded. Sequences are zero-indexed.
+ *
+ *  @note The data source may return any view controller for any index in the sequence, so could potentially provide an adaptive flow.
+ *  However, It is not recommended that view controllers already seen by the user change ordering, as this provides a jarring user experience.
  */
 - (UIViewController<RZSequenceChildViewController> *)sequenceController:(RZSequenceController *)sequenceController viewControllerAtIndex:(NSUInteger)index;
 
@@ -100,9 +103,6 @@ typedef NS_ENUM(NSUInteger, RZSequenceDirection){
  *  @param child                The child that will be transitioned to.
  *  @param idx                  The index that will be transitioned to.
  *  @param animated             Whether the transition will be animated.
- *
- *  @note The data source may return any view controller for any index in the sequence, so could potentially provide an adaptive flow.
- *  However, It is not recommended that view controllers already seen by the user change ordering, as this provides a jarring user experience.
  */
 - (void)sequenceController:(RZSequenceController *)sequenceController willTransitionToChild:(UIViewController<RZSequenceChildViewController> *)child atIndex:(NSUInteger)idx animated:(BOOL)animated;
 
