@@ -26,10 +26,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 /**
- *  View controllers must conform to this protocol in order to be added to an RZSequenceController.
+ *  View controllers must conform to this protocol to be eligible to be added to an RZSequenceController.
  *  @see RZSequenceController
  */
 @protocol RZSequenceChildViewController <NSObject>

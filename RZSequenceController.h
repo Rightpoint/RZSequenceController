@@ -26,7 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 #import "RZSequenceChildViewController.h"
 
 /**
@@ -52,7 +52,7 @@ typedef NS_ENUM(NSUInteger, RZSequenceDirection){
 @protocol RZSequenceControllerDataSource <NSObject>
 
 /**
- *  Returns the total number of view controlelrs in the given sequence controller.
+ *  Returns the total number of view controllers in the given sequence controller.
  */
 - (NSUInteger)numberOfViewControllersInSequence:(RZSequenceController *)sequenceController;
 
@@ -94,12 +94,15 @@ typedef NS_ENUM(NSUInteger, RZSequenceDirection){
 
 /**
  *  Called when a transition is about to take place from the current view controller to the given view controller.
- *  At this point the currentChild and currentIndex properties of the sequence controller have not been changed.
+ *  At this point the current/next/previousChild and currentIndex properties of the sequence controller have not been changed.
  *
  *  @param sequenceController   The sequence controller that will perform a transition.
  *  @param child                The child that will be transitioned to.
  *  @param idx                  The index that will be transitioned to.
  *  @param animated             Whether the transition will be animated.
+ *
+ *  @note The data source may return any view controller for any index in the sequence, so could potentially provide an adaptive flow.
+ *  However, It is not recommended that view controllers already seen by the user change ordering, as this provides a jarring user experience.
  */
 - (void)sequenceController:(RZSequenceController *)sequenceController willTransitionToChild:(UIViewController<RZSequenceChildViewController> *)child atIndex:(NSUInteger)idx animated:(BOOL)animated;
 
@@ -124,7 +127,7 @@ typedef NS_ENUM(NSUInteger, RZSequenceDirection){
 /**
  *  The direction of the sequence flow, either RZSequenceDirectionHorizontal or RZSequenceDirectionVertical.
  */
-@property (nonatomic, readonly) RZSequenceDirection direction;
+@property (assign, nonatomic, readonly) RZSequenceDirection direction;
 
 /**
  *  The currently displayed index in the sequence. You can KVO this property or provide an RZSequenceControllerDelegate
@@ -138,12 +141,12 @@ typedef NS_ENUM(NSUInteger, RZSequenceDirection){
 @property (strong, nonatomic, readonly) UIViewController<RZSequenceChildViewController> *currentChild;
 
 /**
- *  The previous view controller in the sequence, either to the left of the current child (horiztonal sequence) or above it (vertical sequence).
+ *  The previous view controller in the sequence, either to the left of the current child (horizontal sequence) or above it (vertical sequence).
  */
 @property (strong, nonatomic, readonly) UIViewController<RZSequenceChildViewController> *previousChild;
 
 /**
- *  The next view controller in the sequence, either to the right of the current child (horiztonal sequence) or below it (vertical sequence).
+ *  The next view controller in the sequence, either to the right of the current child (horizontal sequence) or below it (vertical sequence).
  */
 @property (strong, nonatomic, readonly) UIViewController<RZSequenceChildViewController> *nextChild;
 
